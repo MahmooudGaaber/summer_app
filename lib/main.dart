@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'modules/hotel_rooms_screen/hotels_rooms_screen.dart';
 import 'modules/login_screen/login_screen.dart';
 import 'modules/onboarding_screen/onboarding_screen.dart';
 import 'modules/profile_screen/porfile_screen.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowMaterialGrid: false,
       debugShowCheckedModeBanner: false,
-      home: ProfileScreen(),
+      home: HotelRoomsScreen(),
     );
   }
 }
