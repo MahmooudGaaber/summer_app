@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'modules/filter_screen/filter_screen.dart';
+import 'modules/hotel_main_screen/hotel_main_screen.dart';
 import 'modules/hotel_rooms_screen/hotels_rooms_screen.dart';
 import 'modules/login_screen/login_screen.dart';
+import 'modules/mytrips_screen/mytrips_screen.dart';
 import 'modules/onboarding_screen/onboarding_screen.dart';
 import 'modules/profile_screen/porfile_screen.dart';
 import 'modules/signup_screen/signup_screen.dart';
@@ -20,7 +23,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowMaterialGrid: false,
       debugShowCheckedModeBanner: false,
-      home: HotelRoomsScreen(),
+      home: TripsScreen(),
     );
   }
 }
