@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:summer_app/models/hotel_rooms_model/hotel_rooms_model.dart';
+import 'package:summer_app/models/hotel_model/hotel_rooms_model.dart';
 import 'package:summer_app/shared/app_style.dart';
 
 class HotelRoomsScreen extends StatefulWidget
@@ -12,6 +12,7 @@ class HotelRoomsScreen extends StatefulWidget
 
 class _HotelRoomsScreenState extends State<HotelRoomsScreen>
 {
+  bool favHotel = false ;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,15 +26,21 @@ class _HotelRoomsScreenState extends State<HotelRoomsScreen>
           buttonIconColor: lightText,
           buttonIcon: Icons.keyboard_arrow_left,
           buttonColor: Colors.white,
-          press:(){},
+          press:(){
+            Navigator.pop(context);
+          },
         ),
         actions: [
           defaultIconButton(
             buttonIconSize: 30.0,
             buttonIconColor: lightText,
-            buttonIcon: Icons.favorite_border,
+            buttonIcon: favHotel ? Icons.favorite: Icons.favorite_border,
             buttonColor: Colors.white,
-            press:(){},
+            press:(){
+              setState(() {
+                favHotel = !favHotel;
+              });
+            },
           ),
         ],
         title: const Text(

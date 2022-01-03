@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+
 const primaryColor =Color(0xff00BF9F);
 
 const tittleTextColor = Color(0xff404A69);
@@ -44,7 +45,7 @@ Widget defaultMaterialButton({ buttonTextStyle ,buttonText , press , buttonPaddi
   ),
 );
 
-Future defaultNavigator ({context, page})=>Navigator.push(
+Future defaultNavigator ( {context, page})=>Navigator.push(
   context,
   MaterialPageRoute(
     builder: (context)=> page,
@@ -62,8 +63,7 @@ Widget defaultIconButton({buttonIcon , press ,  buttonColor , buttonIconColor , 
   color: buttonColor,
 );
 
-
-Widget defaultTextField({ bordColor ,iconButtonPadding,String? hintText , Color? fillColor ,  TextStyle? hintStyle ,  required TextEditingController controller , isPassword}) => Padding(
+Widget defaultTextField({ bordColor ,iconButtonPadding,String? hintText , Color? fillColor ,  TextStyle? hintStyle ,  required TextEditingController controller , isPassword , keyboardType}) => Padding(
   padding: iconButtonPadding,
   child:   Container(
     height: 50.0,
@@ -78,6 +78,7 @@ Widget defaultTextField({ bordColor ,iconButtonPadding,String? hintText , Color?
       ],
     ),
     child:   TextField(
+      keyboardType: keyboardType,
       controller: controller,
       obscureText: isPassword,
       style:  TextStyle(

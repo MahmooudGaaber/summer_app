@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:summer_app/modules/login_screen/login_screen.dart';
+import 'package:summer_app/modules/%D9%90Auth/login_screen.dart';
 import 'package:summer_app/shared/app_style.dart';
 
 class SignupScreen extends StatefulWidget
@@ -26,7 +26,9 @@ class _SignupScreenState extends State<SignupScreen>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               defaultIconButton(
-                press: (){},
+                press: (){
+                  Navigator.pop(context);
+                },
                 buttonColor: Colors.white,
                 buttonIcon:  Icons.keyboard_arrow_left,
                 buttonIconColor: lightText ,
@@ -101,6 +103,7 @@ class _SignupScreenState extends State<SignupScreen>
                 controller: sighupFirstNameController ,
                 fillColor: Colors.white,
                 hintText: 'First Name',
+                keyboardType: TextInputType.name,
                 isPassword: false,
                 iconButtonPadding: const EdgeInsets.symmetric(horizontal: 30.0),
                 hintStyle: const TextStyle(
@@ -116,6 +119,7 @@ class _SignupScreenState extends State<SignupScreen>
               defaultTextField(
                 controller: sighupLastNameController ,
                 fillColor: Colors.white,
+                keyboardType: TextInputType.name,
                 hintText: 'Last Name',
                 isPassword: false,
                 iconButtonPadding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -132,6 +136,7 @@ class _SignupScreenState extends State<SignupScreen>
               defaultTextField(
                 controller: sighupEmailController ,
                 fillColor: Colors.white,
+                keyboardType: TextInputType.emailAddress,
                 hintText: 'Email',
                 isPassword: false,
                 iconButtonPadding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -148,6 +153,7 @@ class _SignupScreenState extends State<SignupScreen>
               defaultTextField(
                 controller: signupPasswordController ,
                 fillColor: Colors.white,
+                keyboardType: null,
                 hintText: 'Password',
                 isPassword: true,
                 iconButtonPadding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -167,10 +173,7 @@ class _SignupScreenState extends State<SignupScreen>
                 buttonPadding: const EdgeInsets.symmetric(horizontal: 30.0),
                 buttonText: 'Sign Up',
                 press: (){
-                  defaultNavigator(
-                      context:context,
-                      page : const LoginScreen()
-                  );
+
                 },
                 buttonTextColor: Colors.white,
               ),

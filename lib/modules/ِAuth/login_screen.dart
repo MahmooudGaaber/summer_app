@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:summer_app/shared/app_style.dart';
 
+import '../bottom_navi.dart';
+
 class LoginScreen extends StatefulWidget
 {
   const LoginScreen({Key? key}) : super(key: key);
@@ -23,7 +25,9 @@ class _LoginScreenState extends State<LoginScreen>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             defaultIconButton(
-              press: (){},
+              press: (){
+                Navigator.pop(context);
+              },
               buttonColor: Colors.white,
               buttonIcon:  Icons.keyboard_arrow_left,
               buttonIconColor: lightText ,
@@ -49,6 +53,7 @@ class _LoginScreenState extends State<LoginScreen>
             defaultTextField(
               controller: loginEmailController ,
               fillColor: Colors.white,
+              keyboardType: TextInputType.emailAddress,
               hintText: 'Your Email',
               isPassword: false,
               iconButtonPadding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -65,6 +70,7 @@ class _LoginScreenState extends State<LoginScreen>
             defaultTextField(
               controller: loginPasswordController ,
               fillColor: Colors.white,
+              keyboardType: null,
               hintText: 'Password',
               isPassword: true,
               iconButtonPadding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -85,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen>
               press: (){
                 defaultNavigator(
                     context:context,
-                    page : const LoginScreen()
+                    page : const BottomNavi()
                 );
               },
               buttonTextColor: Colors.white,

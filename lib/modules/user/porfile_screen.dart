@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:summer_app/models/profile_model/profile_model.dart';
+import 'package:summer_app/models/user/profile_model.dart';
 import 'package:summer_app/shared/app_style.dart';
 
 class ProfileScreen extends StatefulWidget
@@ -22,6 +22,9 @@ class _ProfileScreenState extends State<ProfileScreen>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children:  [
+            const SizedBox(
+              height:30.0 ,
+            ),
             Row(
               children:   [
                 const Spacer(),
@@ -86,7 +89,6 @@ class _ProfileScreenState extends State<ProfileScreen>
               child: ListView.builder(
                 itemBuilder:(context ,index)=>defaultSettingItemBuild(index) ,
                 itemCount:profileModel.length ,
-                physics: const NeverScrollableScrollPhysics(),
               ),
             ),
           ],

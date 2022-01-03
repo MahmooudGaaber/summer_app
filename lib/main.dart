@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
 import 'modules/filter_screen/filter_screen.dart';
-import 'modules/hotel_main_screen/hotel_main_screen.dart';
-import 'modules/hotel_rooms_screen/hotels_rooms_screen.dart';
-import 'modules/login_screen/login_screen.dart';
-import 'modules/mytrips_screen/mytrips_screen.dart';
-import 'modules/onboarding_screen/onboarding_screen.dart';
-import 'modules/profile_screen/porfile_screen.dart';
-import 'modules/signup_screen/signup_screen.dart';
-import 'modules/splash_screen/splash_screen.dart';
+import 'modules/hotel/hotel_details_screen.dart';
+import 'modules/hotel/hotel_main_screen.dart';
+import 'modules/hotel/hotels_rooms_screen.dart';
+import 'modules/ِAuth/login_screen.dart';
+import 'modules/user/mytrips_screen.dart';
+import 'modules/welcome/onboarding_screen.dart';
+import 'modules/user/porfile_screen.dart';
+import 'modules/search_screen/search_screen.dart';
+import 'modules/ِAuth/signup_screen.dart';
+import 'modules/welcome/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowMaterialGrid: false,
       debugShowCheckedModeBanner: false,
-      home: TripsScreen(),
+      home: SplashScreen(),
     );
   }
 }

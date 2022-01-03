@@ -2,8 +2,8 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:summer_app/models/onboarding_model/onboarding_model.dart';
-import 'package:summer_app/modules/login_screen/login_screen.dart';
-import 'package:summer_app/modules/signup_screen/signup_screen.dart';
+import 'package:summer_app/modules/%D9%90Auth/login_screen.dart';
+import 'package:summer_app/modules/%D9%90Auth/signup_screen.dart';
 import 'package:summer_app/shared/app_style.dart';
 
 class BoardingScreen extends StatefulWidget

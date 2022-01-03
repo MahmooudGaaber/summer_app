@@ -2,7 +2,11 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:summer_app/models/hotel_model/hotel_model.dart';
 import 'package:summer_app/shared/app_style.dart';
+
+import 'hotel_details_screen.dart';
+import 'hotels_rooms_screen.dart';
 
 class HotelMainScreen extends StatefulWidget
 {
@@ -13,46 +17,62 @@ class HotelMainScreen extends StatefulWidget
 
 class _HotelMainScreenState extends State<HotelMainScreen>
 {
+  bool favHotel = false ;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-          leading:
-          defaultIconButton(
-            buttonIconSize: 40.0,
-            buttonIconColor: tittleTextColor,
-            buttonIcon: Icons.keyboard_arrow_left,
-            buttonColor: lightTittleTextColor,
-            press:(){},
-          ),
-        actions: [
-          Container(
-            decoration: const BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle
-            ),
-            child: defaultIconButton(
-            buttonIconSize: 30.0,
-            buttonIconColor: tittleTextColor,
-            buttonIcon: Icons.favorite_border,
-            buttonColor: lightTittleTextColor,
-            press:(){},
-            ),
-          ),
-          ],
-      ),
       body: Stack(
         children:  [
           SizedBox(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: const Image(
-              image:AssetImage("assets/images/hotelmainscreen.jpg") ,
+            child:  Image(
+              image:AssetImage( hotelModel[0].hotelimg) ,
               fit: BoxFit.cover,
             ),
+          ),
+          Positioned(
+            left: 10.0,
+            right: 10.0,
+            top: 80.0,
+            child:Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+
+                defaultIconButton(
+                  buttonIconSize: 40.0,
+                  buttonIconColor: primaryColor,
+                  buttonIcon: Icons.keyboard_arrow_left,
+                  buttonColor: lightTittleTextColor,
+                  press:(){
+                    Navigator.pop(context);
+                  },
+                ),
+
+                Container(
+                  height: 40.0,
+                  width: 40.0,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                  ),
+                  child: defaultIconButton(
+                    buttonIconSize: 25.0,
+                    buttonIconColor: primaryColor,
+                    buttonIcon: favHotel ? Icons.favorite: Icons.favorite_border,
+                    buttonColor: Colors.white,
+                    press:(){
+                     setState(() {
+                       favHotel = !favHotel ;
+                     });
+                    },
+                  ),
+                ),
+
+
+              ],
+            ) ,
           ),
           Positioned(
             bottom: 80.0,
@@ -72,18 +92,18 @@ class _HotelMainScreenState extends State<HotelMainScreen>
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const [
+                            children:  [
                               Text(
-                                "Grand Royal\nPark Hotel",
-                                style: TextStyle(
+                                hotelModel[0].hotelName,
+                                style: const TextStyle(
                                   fontFamily: metropolisBold,
                                   color: Colors.white,
                                   fontSize: 20.0,
                                 ),
                               ),
                               Text(
-                                "    280\$\n/ per night",
-                                style: TextStyle(
+                                hotelModel[0].hotelPrice,
+                                style: const TextStyle(
                                   fontFamily: metropolisBold,
                                   color: Colors.white,
                                   fontSize: 15.0,
@@ -94,25 +114,25 @@ class _HotelMainScreenState extends State<HotelMainScreen>
                           ),
                           const SizedBox(height: 15.0,),
                           Row(
-                            children: const [
+                            children:  [
                               Text(
-                                "Barcelona, spain",
-                                style: TextStyle(
+                                hotelModel[0].hotelLocation,
+                                style: const TextStyle(
                                   fontFamily: metropolisBold,
                                   color: Colors.white,
                                   fontSize: 11.0,
                                 ),
                               ),
-                              SizedBox(width: 5.0,),
-                              Icon(
+                              const SizedBox(width: 5.0,),
+                              const Icon(
                                   Icons.location_on,
-                                color: tittleTextColor,
+                                color: primaryColor,
                                 size: 10.0,
                               ),
-                              SizedBox(width: 3.0,),
+                              const SizedBox(width: 3.0,),
                               Text(
-                                "2km from city center",
-                                style: TextStyle(
+                                hotelModel[0].hotelFarAway,
+                                style: const TextStyle(
                                   fontFamily: metropolisBold,
                                   color: Colors.white,
                                   fontSize: 11.0,
@@ -122,36 +142,36 @@ class _HotelMainScreenState extends State<HotelMainScreen>
                           ),
                           const SizedBox(height: 10.0,),
                           Row(
-                            children: const [
-                              Icon(
+                            children:  [
+                              const Icon(
                                 Icons.star,
-                                color: tittleTextColor,
+                                color: primaryColor,
                                 size: 13.0,
                               ),
-                              Icon(
+                              const Icon(
                                 Icons.star,
-                                color: tittleTextColor,
+                                color: primaryColor,
                                 size: 13.0,
                               ),
-                              Icon(
+                              const Icon(
                                 Icons.star,
-                                color: tittleTextColor,
+                                color: primaryColor,
                                 size: 13.0,
                               ),
-                              Icon(
+                              const Icon(
                                 Icons.star,
-                                color: tittleTextColor,
+                                color: primaryColor,
                                 size: 13.0,
                               ),
-                              Icon(
+                              const Icon(
                                 Icons.star_border,
-                                color: tittleTextColor,
+                                color: primaryColor,
                                 size: 13.0,
                               ),
-                              SizedBox(width: 5.0,),
+                              const SizedBox(width: 5.0,),
                               Text(
-                                "80 Reviews",
-                                style: TextStyle(
+                                hotelModel[0].hotelNumOfReviews,
+                                style: const TextStyle(
                                   fontFamily: metropolisBold,
                                   color: Colors.white,
                                   fontSize: 11.0,
@@ -166,9 +186,10 @@ class _HotelMainScreenState extends State<HotelMainScreen>
                             buttonTextStyle: const TextStyle(
                               fontSize: 18.0,
                               fontFamily: metropolisBold ,
-
                             ),
-                            press: (){},
+                            press: (){
+                              defaultNavigator(page:const HotelRoomsScreen(),context: context,);
+                            },
                             buttonPadding: const EdgeInsets.only(top: 20),
                           ),
                         ],
@@ -187,13 +208,14 @@ class _HotelMainScreenState extends State<HotelMainScreen>
               children: [
                 const Spacer(),
                 MaterialButton(
-                  onPressed: (){},
-                  color: Colors.transparent,
+                  onPressed: (){
+                    defaultNavigator(page:const HotelsDetailsScreen(),context: context,);
+                  },
                   disabledColor: Colors.transparent,
                   child:  Row(
                     children: const [
                       Text(
-                        "More Fetails ",
+                        "More Details ",
                         style: TextStyle(
                           color: Colors.white,
                           fontFamily: metropolisBold ,
