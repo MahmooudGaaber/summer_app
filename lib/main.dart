@@ -1,5 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
 import 'modules/filter_screen/filter_screen.dart';
 import 'modules/hotel/hotel_details_screen.dart';
 import 'modules/hotel/hotel_main_screen.dart';
@@ -12,7 +12,10 @@ import 'modules/search_screen/search_screen.dart';
 import 'modules/ِAuth/signup_screen.dart';
 import 'modules/welcome/splash_screen.dart';
 
-void main() {
+Future<void> main() async
+{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -25,7 +28,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowMaterialGrid: false,
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      home: LoginScreen(),
     );
   }
 }

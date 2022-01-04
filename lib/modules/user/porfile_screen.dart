@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
@@ -102,23 +103,30 @@ class _ProfileScreenState extends State<ProfileScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                  profileModel[index].profileSettingText,
-                style: const TextStyle(
-                  color: tittleTextColor ,
-                  fontFamily: metropolisMedium ,
-                  fontSize: 15.0,
+          InkWell(
+            onTap: (){
+              profileModel[index].profileFunction;
+              exit(0);
+              print("Profile Must Be Deleted");
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                    profileModel[index].profileSettingText,
+                  style: const TextStyle(
+                    color: tittleTextColor ,
+                    fontFamily: metropolisMedium ,
+                    fontSize: 15.0,
+                  ),
                 ),
-              ),
-              Icon(
-                profileModel[index].profileSettingIcon,
-                color: lightTittleTextColor,
-                size: 20.0,
-              )
-            ],
+                Icon(
+                  profileModel[index].profileSettingIcon,
+                  color: lightTittleTextColor,
+                  size: 20.0,
+                )
+              ],
+            ),
           ),
           const SizedBox(height: 20.0,),
           profileModel[index].profileSettingDivider,

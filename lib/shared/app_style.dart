@@ -13,6 +13,7 @@ const lightText = Color(0xff535355);
 const headText = Color(0xff343434);
 
 
+
 const metropolisBlack = 'Metropolis_Black' ;
 
 const metropolisExtraBold = 'Metropolis_ExtraBold';
@@ -24,6 +25,11 @@ const metropolisRegular = 'Metropolis_Regular';
 const metropolisSemiBold = 'Metropolis_SemiBold';
 
 const metropolisBold='Metropolis_Bold';
+
+
+
+
+
 
 Widget defaultMaterialButton({ buttonTextStyle ,buttonText , press , buttonPadding , buttonColor , buttonTextColor}) => Padding(
   padding: buttonPadding,
@@ -63,7 +69,7 @@ Widget defaultIconButton({buttonIcon , press ,  buttonColor , buttonIconColor , 
   color: buttonColor,
 );
 
-Widget defaultTextField({ bordColor ,iconButtonPadding,String? hintText , Color? fillColor ,  TextStyle? hintStyle ,  required TextEditingController controller , isPassword , keyboardType}) => Padding(
+Widget defaultTextField({  bordColor ,  dynamic textFieldValidator ,iconButtonPadding, String? hintText , Color? fillColor ,  TextStyle? hintStyle ,  required TextEditingController controller , isPassword , keyboardType}) => Padding(
   padding: iconButtonPadding,
   child:   Container(
     height: 50.0,
@@ -77,7 +83,8 @@ Widget defaultTextField({ bordColor ,iconButtonPadding,String? hintText , Color?
         ),
       ],
     ),
-    child:   TextField(
+    child:   TextFormField(
+      validator: textFieldValidator ,
       keyboardType: keyboardType,
       controller: controller,
       obscureText: isPassword,

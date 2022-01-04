@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:summer_app/shared/app_style.dart';
 
 import '../bottom_navi.dart';
@@ -15,157 +17,191 @@ class _LoginScreenState extends State<LoginScreen>
 {
   TextEditingController loginEmailController = TextEditingController();
   TextEditingController loginPasswordController = TextEditingController();
+  FirebaseAuth auth = FirebaseAuth.instance;
+  var formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
     body: SingleChildScrollView(
-      child: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            defaultIconButton(
-              press: (){
-                Navigator.pop(context);
-              },
-              buttonColor: Colors.white,
-              buttonIcon:  Icons.keyboard_arrow_left,
-              buttonIconColor: lightText ,
-              buttonIconSize: 30.0,
-            ),
-            Row(
-              children:  const [
-                Spacer(),
-                Text(
-                  "Login" ,
-                  style: TextStyle(
-                    fontFamily: 'Metropolis_Black',
-                    color: tittleTextColor,
-                    fontSize: 28.0,
+      child: Form(
+        key: formKey,
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              defaultIconButton(
+                press: (){
+                  Navigator.pop(context);
+                },
+                buttonColor: Colors.white,
+                buttonIcon:  Icons.keyboard_arrow_left,
+                buttonIconColor: lightText ,
+                buttonIconSize: 30.0,
+              ),
+              Row(
+                children:  const [
+                  Spacer(),
+                  Text(
+                    "Login" ,
+                    style: TextStyle(
+                      fontFamily: 'Metropolis_Black',
+                      color: tittleTextColor,
+                      fontSize: 28.0,
+                    ),
                   ),
+                  Spacer(),
+                ],
+              ),
+
+              const SizedBox(height: 100.0,),
+
+              defaultTextField(
+                controller: loginEmailController ,
+                fillColor: Colors.white,
+                keyboardType: TextInputType.emailAddress,
+                hintText: 'Your Email',
+                textFieldValidator:   (value) {
+                    if (value.isEmpty || !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                    return "Enter Right Email Form";
+                    }
+                    return null;
+                    },
+                isPassword: false,
+                iconButtonPadding: const EdgeInsets.symmetric(horizontal: 30.0),
+                hintStyle: const TextStyle(
+                  color:headText,
+                  fontFamily: metropolisRegular,
+                  fontSize: 14.0,
                 ),
-                Spacer(),
-              ],
-            ),
-
-            const SizedBox(height: 100.0,),
-
-            defaultTextField(
-              controller: loginEmailController ,
-              fillColor: Colors.white,
-              keyboardType: TextInputType.emailAddress,
-              hintText: 'Your Email',
-              isPassword: false,
-              iconButtonPadding: const EdgeInsets.symmetric(horizontal: 30.0),
-              hintStyle: const TextStyle(
-                color:headText,
-                fontFamily: metropolisRegular,
-                fontSize: 14.0,
+                bordColor: headText,
               ),
-              bordColor: headText,
-            ),
 
-            const SizedBox(height: 20.0,),
+              const SizedBox(height: 20.0,),
 
-            defaultTextField(
-              controller: loginPasswordController ,
-              fillColor: Colors.white,
-              keyboardType: null,
-              hintText: 'Password',
-              isPassword: true,
-              iconButtonPadding: const EdgeInsets.symmetric(horizontal: 30.0),
-              hintStyle: const TextStyle(
-                color:headText,
-                fontFamily: metropolisRegular,
-                fontSize: 14.0,
+              defaultTextField(
+                controller: loginPasswordController ,
+                fillColor: Colors.white,
+                keyboardType: null,
+                hintText: 'Password',
+                textFieldValidator: (value) {
+                  if (value.isEmpty) {
+                    return "Password is Empty";
+                  }
+                  return null;
+                },
+                isPassword: true,
+                iconButtonPadding: const EdgeInsets.symmetric(horizontal: 30.0),
+                hintStyle: const TextStyle(
+                  color:headText,
+                  fontFamily: metropolisRegular,
+                  fontSize: 14.0,
+                ),
+                bordColor: headText,
               ),
-              bordColor: headText,
-            ),
 
-            const SizedBox(height: 90.0,),
+              const SizedBox(height: 90.0,),
 
-            defaultMaterialButton(
-              buttonColor: primaryColor,
-              buttonPadding: const EdgeInsets.symmetric(horizontal: 30.0),
-              buttonText: 'Login',
-              press: (){
-                defaultNavigator(
-                    context:context,
-                    page : const BottomNavi()
-                );
-              },
-              buttonTextColor: Colors.white,
-            ),
+              defaultMaterialButton(
+                buttonColor: primaryColor,
+                buttonPadding: const EdgeInsets.symmetric(horizontal: 30.0),
+                buttonText: 'Login',
+                buttonTextColor: Colors.white,
+                press: () async {
 
-            const SizedBox(height: 10.0,),
+                  if(formKey.currentState!.validate())
+                  {
+                    try {
+                        await auth.signInWithEmailAndPassword(
+                          email: loginEmailController.text,
+                          password: loginPasswordController.text,
+                      );
+                        defaultNavigator( context:context, page : const BottomNavi(),);
 
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-               const Spacer(),
-               InkWell(
-                 onTap: (){},
-                 child: const Padding(
-                   padding: EdgeInsets.all(10.0),
-                   child: Text(
-                     "Forget Your Password?",
-                     style: TextStyle(
-                       color:headText ,
+                    } on FirebaseAuthException catch (e) {
+                      if (e.code == 'user-not-found') {
+                        print('No user found for that email.');
+                      } else if (e.code == 'wrong-password') {
+                        print('Wrong password provided for that user.');
+                      }
+                    }
+
+                  }
+
+
+                  },
+              ),
+
+              const SizedBox(height: 10.0,),
+
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                 const Spacer(),
+                 InkWell(
+                   onTap: (){},
+                   child: const Padding(
+                     padding: EdgeInsets.all(10.0),
+                     child: Text(
+                       "Forget Your Password?",
+                       style: TextStyle(
+                         color:headText ,
+                       ),
                      ),
                    ),
                  ),
-               ),
-               const Spacer(),
-              ],
-            ),
+                 const Spacer(),
+                ],
+              ),
 
-            const SizedBox(height: 50.0,),
+              const SizedBox(height: 50.0,),
 
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: const [
-                Spacer(),
-                Text(
-                  "or Login With",
-                  style: TextStyle(
-                    color:headText ,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: const [
+                  Spacer(),
+                  Text(
+                    "or Login With",
+                    style: TextStyle(
+                      color:headText ,
+                    ),
                   ),
-                ),
-                Spacer(),
-              ],
-            ),
+                  Spacer(),
+                ],
+              ),
 
-            const SizedBox(height: 25.0,),
+              const SizedBox(height: 25.0,),
 
-            defaultMaterialButton(
-              buttonColor: Colors.blue,
-              buttonPadding: const EdgeInsets.symmetric(horizontal: 30.0),
-              buttonText: 'Login With Facebook',
-              press: (){
-                defaultNavigator(
-                    context:context,
-                    page : const LoginScreen()
-                );
-              },
-              buttonTextColor: Colors.white,
-            ),
+              defaultMaterialButton(
+                buttonColor: Colors.blue,
+                buttonPadding: const EdgeInsets.symmetric(horizontal: 30.0),
+                buttonText: 'Login With Facebook',
+                press: (){
+                  defaultNavigator(
+                      context:context,
+                      page : const LoginScreen()
+                  );
+                },
+                buttonTextColor: Colors.white,
+              ),
 
-            const SizedBox(height: 15.0,),
+              const SizedBox(height: 15.0,),
 
-            defaultMaterialButton(
-              buttonColor: Colors.red,
-              buttonPadding: const EdgeInsets.symmetric(horizontal: 30.0),
-              buttonText: 'Login With Google',
-              press: (){
-                defaultNavigator(
-                    context:context,
-                    page : const LoginScreen()
-                );
-              },
-              buttonTextColor: Colors.white,
-            ),
+              defaultMaterialButton(
+                buttonColor: Colors.red,
+                buttonPadding: const EdgeInsets.symmetric(horizontal: 30.0),
+                buttonText: 'Login With Google',
+                press: (){
+                  defaultNavigator(
+                      context:context,
+                      page : const LoginScreen()
+                  );
+                },
+                buttonTextColor: Colors.white,
+              ),
 
-          ],
+            ],
+          ),
         ),
       ),
     ),
