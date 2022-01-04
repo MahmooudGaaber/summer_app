@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:summer_app/shared/app_style.dart';
 
 import '../bottom_navi.dart';
@@ -17,7 +16,6 @@ class _LoginScreenState extends State<LoginScreen>
 {
   TextEditingController loginEmailController = TextEditingController();
   TextEditingController loginPasswordController = TextEditingController();
-  FirebaseAuth auth = FirebaseAuth.instance;
   var formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -112,18 +110,46 @@ class _LoginScreenState extends State<LoginScreen>
                   if(formKey.currentState!.validate())
                   {
                     try {
-                        await auth.signInWithEmailAndPassword(
+                        await FirebaseAuth.instance.signInWithEmailAndPassword(
                           email: loginEmailController.text,
                           password: loginPasswordController.text,
                       );
-                        defaultNavigator( context:context, page : const BottomNavi(),);
+
+                        await   showDialog(
+                          context: context,
+                          builder: (context) => const AlertDialog(
+                            title: Text(
+                                'Welcome again',
+                              style: TextStyle(
+                                color: primaryColor,
+                                fontSize: 20.0,
+                                fontFamily: metropolisBold,
+                              ),
+                            ),
+                            content: Image(
+                              image: AssetImage("assets/images/login_done.gif"),
+                            ),
+                          ),
+                        );
+
+                        await   defaultNavigator( context:context, page : const BottomNavi(),);
 
                     } on FirebaseAuthException catch (e) {
-                      if (e.code == 'user-not-found') {
-                        print('No user found for that email.');
-                      } else if (e.code == 'wrong-password') {
-                        print('Wrong password provided for that user.');
-                      }
+
+
+                      showDialog(
+                          context: context,
+                          builder: (context) => const AlertDialog(
+                              title: Text('Something Get Wrong'),
+                              content: Image(
+                                image: AssetImage("assets/images/404-errorgif.gif"),
+                              ),
+                          ),
+                      );
+
+
+
+
                     }
 
                   }

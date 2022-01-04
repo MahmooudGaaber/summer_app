@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:summer_app/modules/%D9%90Auth/login_screen.dart';
 import 'package:summer_app/shared/app_style.dart';
 
@@ -20,7 +19,6 @@ class _SignupScreenState extends State<SignupScreen>
   TextEditingController signupPasswordController = TextEditingController();
   TextEditingController sighupFirstNameController = TextEditingController();
   TextEditingController sighupLastNameController = TextEditingController();
-  FirebaseAuth auth = FirebaseAuth.instance;
   var formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -210,17 +208,39 @@ class _SignupScreenState extends State<SignupScreen>
 
 
                       try {
-                        await auth.createUserWithEmailAndPassword(
+                        await FirebaseAuth.instance.createUserWithEmailAndPassword(
                             email: sighupEmailController.text,
                             password: signupPasswordController.text,
                         );
-                        defaultNavigator( context:context, page : const BottomNavi(),);
+
+                        await showDialog(
+                          context: context,
+                          builder: (context) => const AlertDialog(
+                            title: Text("Let's Start our Journey",
+                              style: TextStyle(
+                                color: primaryColor,
+                                fontSize: 20.0,
+                                fontFamily: metropolisBold,
+                              ),),
+                            content: Image(
+                              image: AssetImage("assets/images/signup_done.gif"),
+                            ),
+                          ),
+                        );
+
+                        await defaultNavigator( context:context, page : const BottomNavi(),);
                       } on FirebaseAuthException catch (e) {
                         // ask About types of Exceptions
-
+                        showDialog(
+                          context: context,
+                          builder: (context) => const AlertDialog(
+                            title: Text('Something Get Wrong'),
+                            content: Image(
+                              image: AssetImage("assets/images/404-errorgif.gif"),
+                            ),
+                          ),
+                        );
                       }
-
-
                     }
                   },
 

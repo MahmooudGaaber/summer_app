@@ -1,6 +1,9 @@
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:summer_app/modules/%D9%90Auth/login_screen.dart';
+import 'package:summer_app/shared/app_style.dart';
 
 class ProfileMode{
   late String profileSettingText ;
@@ -52,7 +55,12 @@ List<ProfileMode> profileModel = [
     profileSettingIcon: Icons.settings,
     profileSettingText: 'Log Out',
     profileFunction: () async {
-      await FirebaseAuth.instance.currentUser!.delete();
+      await  FirebaseAuth.instance.signOut();
+      runApp(
+          MaterialApp(
+            home: new LoginScreen(),
+          ),
+      );
     },
   ),
 ] ;
