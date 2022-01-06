@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:summer_app/modules/%D9%90Auth/login_screen.dart';
@@ -20,6 +21,9 @@ class _SignupScreenState extends State<SignupScreen>
   TextEditingController sighupFirstNameController = TextEditingController();
   TextEditingController sighupLastNameController = TextEditingController();
   var formKey = GlobalKey<FormState>();
+  final userData =  FirebaseDatabase.instance.ref().child("Users").push();
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -213,6 +217,24 @@ class _SignupScreenState extends State<SignupScreen>
                             password: signupPasswordController.text,
                         );
 
+
+
+
+                        userData.child(FirebaseAuth.instance.currentUser!.uid).set({
+                          "First Name": sighupFirstNameController.text,
+                          "Last Name": sighupLastNameController.text,
+                          "Email": sighupEmailController.text,
+                        });
+
+
+
+                        await   Navigator.of(context)
+                            .pushAndRemoveUntil(
+                            MaterialPageRoute<void>(
+                                builder: (BuildContext context) => const BottomNavi()),
+                                (route) => false
+                        );
+
                         await showDialog(
                           context: context,
                           builder: (context) => const AlertDialog(
@@ -228,7 +250,7 @@ class _SignupScreenState extends State<SignupScreen>
                           ),
                         );
 
-                        await defaultNavigator( context:context, page : const BottomNavi(),);
+
                       } on FirebaseAuthException catch (e) {
                         // ask About types of Exceptions
                         showDialog(
@@ -241,6 +263,10 @@ class _SignupScreenState extends State<SignupScreen>
                           ),
                         );
                       }
+
+
+
+
                     }
                   },
 

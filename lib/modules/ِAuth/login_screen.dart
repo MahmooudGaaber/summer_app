@@ -115,6 +115,13 @@ class _LoginScreenState extends State<LoginScreen>
                           password: loginPasswordController.text,
                       );
 
+                        await   Navigator.of(context)
+                            .pushAndRemoveUntil(
+                            MaterialPageRoute<void>(
+                                builder: (BuildContext context) => const BottomNavi()),
+                                (route) => false
+                        );
+
                         await   showDialog(
                           context: context,
                           builder: (context) => const AlertDialog(
@@ -132,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen>
                           ),
                         );
 
-                        await   defaultNavigator( context:context, page : const BottomNavi(),);
+
 
                     } on FirebaseAuthException catch (e) {
 
