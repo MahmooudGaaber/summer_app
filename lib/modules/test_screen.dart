@@ -16,6 +16,7 @@ class TestScreen extends StatefulWidget
 class _TestScreenState extends State<TestScreen>
 {
    late File file = File("");
+   late String imageDownloadLink ;
 
    @override
   Widget build(BuildContext context) {
@@ -60,7 +61,7 @@ class _TestScreenState extends State<TestScreen>
               uploadFile(
                 file: file ,
                 filename: "test",
-                refName: "Images",
+                refName: "Images", imageURL: null,
               );
 
             },
@@ -90,9 +91,6 @@ class _TestScreenState extends State<TestScreen>
             ),
           ),
 
-
-
-
         ],
       ),
     );
@@ -111,11 +109,16 @@ class _TestScreenState extends State<TestScreen>
 
 
    // how to upload a file to firebase storage
-  Future uploadFile({ required refName, required filename, required file}) async {
+  Future uploadFile({ required refName, required filename, required file , required imageURL}) async {
     await FirebaseStorage.instance
         .ref()
         .child(refName)
-        .child(filename).putFile(file);
+        .child(filename).putFile(file).then((p0) => null);
+
+   imageURL = FirebaseStorage.instance
+        .ref()
+        .child(refName)
+        .child(filename).getDownloadURL();
 
   }
 

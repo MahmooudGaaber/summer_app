@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:summer_app/shared/app_style.dart';
+import 'package:summer_app/shared/firebase_methods.dart';
 
 import '../bottom_navi.dart';
 
@@ -106,62 +107,22 @@ class _LoginScreenState extends State<LoginScreen>
                 buttonText: 'Login',
                 buttonTextColor: Colors.white,
                 press: () async {
-
                   if(formKey.currentState!.validate())
                   {
                     try {
-                        await FirebaseAuth.instance.signInWithEmailAndPassword(
-                          email: loginEmailController.text,
-                          password: loginPasswordController.text,
+                      FireBaseMethods().login(loginEmailController.text, loginPasswordController.text);
+                      FireBaseMethods().loginDone(
+                        page: const BottomNavi(),
+                        context: context,
                       );
-
-                        await   Navigator.of(context)
-                            .pushAndRemoveUntil(
-                            MaterialPageRoute<void>(
-                                builder: (BuildContext context) => const BottomNavi()),
-                                (route) => false
-                        );
-
-                        await   showDialog(
-                          context: context,
-                          builder: (context) => const AlertDialog(
-                            title: Text(
-                                'Welcome again',
-                              style: TextStyle(
-                                color: primaryColor,
-                                fontSize: 20.0,
-                                fontFamily: metropolisBold,
-                              ),
-                            ),
-                            content: Image(
-                              image: AssetImage("assets/images/login_done.gif"),
-                            ),
-                          ),
-                        );
-
-
-
                     } on FirebaseAuthException catch (e) {
-
-
-                      showDialog(
-                          context: context,
-                          builder: (context) => const AlertDialog(
-                              title: Text('Something Get Wrong'),
-                              content: Image(
-                                image: AssetImage("assets/images/404-errorgif.gif"),
-                              ),
-                          ),
+                      FireBaseMethods().gettingError(
+                        page: const LoginScreen(),
+                        context: context,
                       );
-
-
-
-
                     }
 
                   }
-
-
                   },
               ),
 

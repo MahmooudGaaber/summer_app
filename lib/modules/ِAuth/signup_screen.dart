@@ -2,28 +2,26 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:summer_app/models/user/userdata_model.dart';
 import 'package:summer_app/modules/%D9%90Auth/login_screen.dart';
 import 'package:summer_app/shared/app_style.dart';
-
+import 'package:summer_app/shared/firebase_methods.dart';
 import '../bottom_navi.dart';
 
-class SignupScreen extends StatefulWidget
-{
+class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
+
   @override
   _SignupScreenState createState() => _SignupScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen>
-{
+class _SignupScreenState extends State<SignupScreen> {
   TextEditingController sighupEmailController = TextEditingController();
   TextEditingController signupPasswordController = TextEditingController();
   TextEditingController sighupFirstNameController = TextEditingController();
   TextEditingController sighupLastNameController = TextEditingController();
   var formKey = GlobalKey<FormState>();
-  final userData =  FirebaseDatabase.instance.ref().child("Users").push();
-
-
+  // final userData = FirebaseDatabase.instance.ref().child("Users").push();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,20 +34,19 @@ class _SignupScreenState extends State<SignupScreen>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 defaultIconButton(
-                  press: (){
+                  press: () {
                     Navigator.pop(context);
                   },
                   buttonColor: Colors.white,
-                  buttonIcon:  Icons.keyboard_arrow_left,
-                  buttonIconColor: lightText ,
+                  buttonIcon: Icons.keyboard_arrow_left,
+                  buttonIconColor: lightText,
                   buttonIconSize: 30.0,
                 ),
-
                 Row(
-                  children:  const [
+                  children: const [
                     Spacer(),
                     Text(
-                      "Sign Up" ,
+                      "Sign Up",
                       style: TextStyle(
                         fontFamily: 'Metropolis_Black',
                         color: tittleTextColor,
@@ -59,39 +56,35 @@ class _SignupScreenState extends State<SignupScreen>
                     Spacer(),
                   ],
                 ),
-
-                const SizedBox(height: 30.0,),
-
+                const SizedBox(
+                  height: 30.0,
+                ),
                 defaultMaterialButton(
                   buttonColor: Colors.blue,
                   buttonPadding: const EdgeInsets.symmetric(horizontal: 30.0),
                   buttonText: 'Login With Facebook',
-                  press: (){
+                  press: () {
                     defaultNavigator(
-                        context:context,
-                        page : const LoginScreen()
-                    );
+                        context: context, page: const LoginScreen());
                   },
                   buttonTextColor: Colors.white,
                 ),
-
-                const SizedBox(height: 15.0,),
-
+                const SizedBox(
+                  height: 15.0,
+                ),
                 defaultMaterialButton(
                   buttonColor: Colors.red,
                   buttonPadding: const EdgeInsets.symmetric(horizontal: 30.0),
                   buttonText: 'Login With Google',
-                  press: (){
+                  press: () {
                     defaultNavigator(
-                        context:context,
-                        page : const LoginScreen()
-                    );
+                        context: context, page: const LoginScreen());
                   },
                   buttonTextColor: Colors.white,
                 ),
-
-                const SizedBox(height: 25.0,),
-
+                const SizedBox(
+                  height: 25.0,
+                ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: const [
@@ -99,94 +92,101 @@ class _SignupScreenState extends State<SignupScreen>
                     Text(
                       "or Login With Email",
                       style: TextStyle(
-                        color:headText ,
+                        color: headText,
                       ),
                     ),
                     Spacer(),
                   ],
                 ),
-
-                const SizedBox(height: 25.0,),
-
-
+                const SizedBox(
+                  height: 25.0,
+                ),
                 defaultTextField(
-                  controller: sighupFirstNameController ,
+                  controller: sighupFirstNameController,
                   fillColor: Colors.white,
                   hintText: 'First Name',
                   keyboardType: TextInputType.name,
                   isPassword: false,
-                  iconButtonPadding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  iconButtonPadding:
+                      const EdgeInsets.symmetric(horizontal: 30.0),
                   hintStyle: const TextStyle(
-                    color:headText,
+                    color: headText,
                     fontFamily: metropolisRegular,
                     fontSize: 14.0,
                   ),
                   bordColor: headText,
-                  textFieldValidator:   (value) {
-                    if (value.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
+                  textFieldValidator: (value) {
+                    if (value.isEmpty ||
+                        !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
                       return "Enter Right Name Form";
                     }
                     return null;
                   },
                 ),
-
-                const SizedBox(height: 20.0,),
-
+                const SizedBox(
+                  height: 20.0,
+                ),
                 defaultTextField(
-                  controller: sighupLastNameController ,
+                  controller: sighupLastNameController,
                   fillColor: Colors.white,
                   keyboardType: TextInputType.name,
                   hintText: 'Last Name',
                   isPassword: false,
-                  iconButtonPadding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  iconButtonPadding:
+                      const EdgeInsets.symmetric(horizontal: 30.0),
                   hintStyle: const TextStyle(
-                    color:headText,
+                    color: headText,
                     fontFamily: metropolisRegular,
                     fontSize: 14.0,
                   ),
                   bordColor: headText,
-                  textFieldValidator:   (value) {
-                    if (value.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
+                  textFieldValidator: (value) {
+                    if (value.isEmpty ||
+                        !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
                       return "Enter Right Name Form";
                     }
                     return null;
                   },
                 ),
-
-                const SizedBox(height: 20.0,),
-
+                const SizedBox(
+                  height: 20.0,
+                ),
                 defaultTextField(
-                  controller: sighupEmailController ,
+                  controller: sighupEmailController,
                   fillColor: Colors.white,
                   keyboardType: TextInputType.emailAddress,
                   hintText: 'Email',
                   isPassword: false,
-                  iconButtonPadding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  iconButtonPadding:
+                      const EdgeInsets.symmetric(horizontal: 30.0),
                   hintStyle: const TextStyle(
-                    color:headText,
+                    color: headText,
                     fontFamily: metropolisRegular,
                     fontSize: 14.0,
                   ),
                   bordColor: headText,
-                  textFieldValidator:   (value) {
-                    if (value.isEmpty || !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                  textFieldValidator: (value) {
+                    if (value.isEmpty ||
+                        !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                            .hasMatch(value)) {
                       return "Enter Right Email Form";
                     }
                     return null;
                   },
                 ),
-
-                const SizedBox(height: 20.0,),
-
+                const SizedBox(
+                  height: 20.0,
+                ),
                 defaultTextField(
-                  controller: signupPasswordController ,
+                  controller: signupPasswordController,
                   fillColor: Colors.white,
                   keyboardType: null,
                   hintText: 'Password',
                   isPassword: true,
-                  iconButtonPadding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  iconButtonPadding:
+                      const EdgeInsets.symmetric(horizontal: 30.0),
                   hintStyle: const TextStyle(
-                    color:headText,
+                    color: headText,
                     fontFamily: metropolisRegular,
                     fontSize: 14.0,
                   ),
@@ -198,107 +198,63 @@ class _SignupScreenState extends State<SignupScreen>
                     return null;
                   },
                 ),
-
-
-                const SizedBox(height: 50.0,),
-
+                const SizedBox(
+                  height: 50.0,
+                ),
                 defaultMaterialButton(
                   buttonColor: primaryColor,
                   buttonPadding: const EdgeInsets.symmetric(horizontal: 30.0),
                   buttonText: 'Sign Up',
                   buttonTextColor: Colors.white,
                   press: () async {
-                    if(formKey.currentState!.validate()){
+                    if (formKey.currentState!.validate())
+                    {
+                      try
+                      {
+                      FireBaseMethods().signup(sighupFirstNameController.text, signupPasswordController.text, sighupEmailController.text);
+                      FireBaseMethods().signupDone(
+                        context: context,
+                        page: const BottomNavi(),
+                      );
 
-
-                      try {
-                        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                            email: sighupEmailController.text,
-                            password: signupPasswordController.text,
-                        );
-
-
-
-
-                        userData.child(FirebaseAuth.instance.currentUser!.uid).set({
-                          "First Name": sighupFirstNameController.text,
-                          "Last Name": sighupLastNameController.text,
-                          "Email": sighupEmailController.text,
-                        });
-
-
-
-                        await   Navigator.of(context)
-                            .pushAndRemoveUntil(
-                            MaterialPageRoute<void>(
-                                builder: (BuildContext context) => const BottomNavi()),
-                                (route) => false
-                        );
-
-                        await showDialog(
-                          context: context,
-                          builder: (context) => const AlertDialog(
-                            title: Text("Let's Start our Journey",
-                              style: TextStyle(
-                                color: primaryColor,
-                                fontSize: 20.0,
-                                fontFamily: metropolisBold,
-                              ),),
-                            content: Image(
-                              image: AssetImage("assets/images/signup_done.gif"),
-                            ),
-                          ),
-                        );
-
-
-                      } on FirebaseAuthException catch (e) {
-                        // ask About types of Exceptions
-                        showDialog(
-                          context: context,
-                          builder: (context) => const AlertDialog(
-                            title: Text('Something Get Wrong'),
-                            content: Image(
-                              image: AssetImage("assets/images/404-errorgif.gif"),
-                            ),
-                          ),
+                      } on FirebaseAuthException catch (e)
+                      {
+                        FireBaseMethods().gettingError(
+                          context : context ,
+                          page  : const SignupScreen() ,
                         );
                       }
-
-
-
-
                     }
                   },
-
                 ),
-
-                const SizedBox(height: 10.0,),
-
+                const SizedBox(
+                  height: 10.0,
+                ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children:  [
+                  children: [
                     const Spacer(),
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Row(
-                        children:  [
+                        children: [
                           const Text(
                             "Already have account?",
                             style: TextStyle(
-                              color:headText ,
+                              color: headText,
                             ),
                           ),
                           InkWell(
-                            onTap: (){
+                            onTap: () {
                               defaultNavigator(
-                                context: context ,
+                                context: context,
                                 page: const LoginScreen(),
                               );
                             },
-                            child:  const Text(
+                            child: const Text(
                               " Login",
                               style: TextStyle(
-                                color:primaryColor ,
+                                color: primaryColor,
                               ),
                             ),
                           ),

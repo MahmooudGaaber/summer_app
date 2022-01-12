@@ -1,10 +1,12 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:summer_app/models/user/profile_model.dart';
 import 'package:summer_app/shared/app_style.dart';
+import 'package:summer_app/shared/firebase_methods.dart';
 
 class ProfileScreen extends StatefulWidget
 {
@@ -15,7 +17,7 @@ class ProfileScreen extends StatefulWidget
 
 class _ProfileScreenState extends State<ProfileScreen>
 {
-
+  String imageLink ="https://image.shutterstock.com/image-vector/man-character-face-avatar-glasses-260nw-562077406.jpg" ;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,10 +54,10 @@ class _ProfileScreenState extends State<ProfileScreen>
                     Container(
                       height: 100.0,
                       width: 100.0,
-                      decoration: const BoxDecoration(
+                      decoration:  BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
-                          image: AssetImage("assets/images/profilepic.jpg"),
+                          image:  NetworkImage(imageLink),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -68,7 +70,13 @@ class _ProfileScreenState extends State<ProfileScreen>
                                 height: 35.0,
                                 width: 35.0,
                                 child: RawMaterialButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    FireBaseMethods().selectFile();
+                                    FireBaseMethods().uploadProfilePic();
+                                    setState(() {
+                                      imageLink =  (FirebaseStorage.instance.ref().child("ProfilePicturesFolder").child("profilePic").getDownloadURL() as String?)!;
+                                    });
+                                  },
                                   elevation: 2.0,
                                   fillColor: Colors.white,
                                   child: const Icon(Icons.camera_alt_outlined, color: primaryColor,),
@@ -107,7 +115,6 @@ class _ProfileScreenState extends State<ProfileScreen>
             onTap: (){
               profileModel[index].profileFunction;
               exit(0);
-              print("Profile Must Be Deleted");
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
