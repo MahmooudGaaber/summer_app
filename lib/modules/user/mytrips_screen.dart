@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:summer_app/models/user/trips_model.dart';
 import 'package:summer_app/shared/app_style.dart';
 
+import '../../firestoredatabase_test1.dart';
+
 class TripsScreen extends StatefulWidget
 {
   const TripsScreen({Key? key}) : super(key: key);
@@ -53,7 +55,7 @@ class _TripsScreenState extends State<TripsScreen>
               Expanded(
                 child: ListView.builder(
                   physics: const BouncingScrollPhysics(),
-                  itemCount:hotelsDetailModels.length,
+                  itemCount:cardTestModel.length,
                   itemBuilder:(context,index){
                     return buildTrips(index);
                   } ,
@@ -63,6 +65,18 @@ class _TripsScreenState extends State<TripsScreen>
           ),
         ),
       ),
+        floatingActionButton: FloatingActionButton(
+            child: const Icon(Icons.add,
+            color: primaryColor,),
+            backgroundColor: Colors.white,
+            onPressed: (){
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute<void>(
+                      builder: (BuildContext context) =>
+                      const FireStoreTest1()),
+                      (route) => false);
+            }
+        )
     );
   }
 
@@ -94,7 +108,7 @@ class _TripsScreenState extends State<TripsScreen>
           children: [
             const Spacer(),
             Text(
-              "${hotelsDetailModels[index].tripStart} - ${hotelsDetailModels[index].tripEnd}, ${hotelsDetailModels[index].numOfRooms} - ${hotelsDetailModels[index].numOfPeople}",
+              " ${cardTestModel[index].date}, ${cardTestModel[index].rooms}",
               style: const TextStyle(
                 fontFamily: metropolisBold ,
                 color: Colors.black54,
@@ -118,7 +132,7 @@ class _TripsScreenState extends State<TripsScreen>
                     topRight: Radius.circular(15.0),
                   ),
                   image: DecorationImage(
-                    image:AssetImage(hotelsDetailModels[index].hotelImg),
+                    image:NetworkImage(cardTestModel[index].image),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -140,52 +154,51 @@ class _TripsScreenState extends State<TripsScreen>
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
+                          children:  [
                             Text(
-                              "Grand Royal\nPark Hotel",
-                              style: TextStyle(
+                              cardTestModel[index].name,
+                              style: const TextStyle(
                                 fontFamily: metropolisBold,
                                 color: Colors.black,
                                 fontSize: 20.0,
                               ),
                             ),
-                            Text(
-                              "    280\$\n/ per night",
-                              style: TextStyle(
+                             Text(
+                              cardTestModel[index].price,
+                              style: const TextStyle(
                                 fontFamily: metropolisBold,
                                 color: Colors.black54,
                                 fontSize: 13.0,
                               ),
                             ),
-
                           ],
                         ),
                         const SizedBox(height: 15.0,),
                         Row(
-                          children: const [
+                          children:  [
                             Text(
-                              "Barcelona, spain",
-                              style: TextStyle(
+                              cardTestModel[index].location,
+                              style: const TextStyle(
                                 fontFamily: metropolisBold,
                                 color: Colors.black54,
                                 fontSize: 11.0,
                               ),
                             ),
-                            SizedBox(width: 5.0,),
-                            Icon(
-                              Icons.location_on,
-                              color: primaryColor,
-                              size: 10.0,
-                            ),
-                            SizedBox(width: 3.0,),
-                            Text(
-                              "2km from city center",
-                              style: TextStyle(
-                                fontFamily: metropolisBold,
-                                color: Colors.black54,
-                                fontSize: 11.0,
-                              ),
-                            ),
+                            const SizedBox(width: 5.0,),
+                            // Icon(
+                            //   Icons.location_on,
+                            //   color: primaryColor,
+                            //   size: 10.0,
+                            // ),
+                            // SizedBox(width: 3.0,),
+                            // Text(
+                            //   "2km from city center",
+                            //   style: TextStyle(
+                            //     fontFamily: metropolisBold,
+                            //     color: Colors.black54,
+                            //     fontSize: 11.0,
+                            //   ),
+                            // ),
                           ],
                         ),
                         const SizedBox(height: 10.0,),

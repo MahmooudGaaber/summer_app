@@ -54,7 +54,7 @@ class _HotelRoomsScreenState extends State<HotelRoomsScreen>
       ),
       body: ListView.builder(
           itemBuilder: (context , index)=>hotelRoomItemBuild(index),
-        itemCount: hotelRoomsModel.length,
+        itemCount: hotelRoomsModel[0].length,
         physics: const BouncingScrollPhysics(),
       ),
     );
@@ -69,7 +69,7 @@ class _HotelRoomsScreenState extends State<HotelRoomsScreen>
           width: double.infinity,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage(hotelRoomsModel[index].roomPic),
+              image: NetworkImage(hotelRoomsModel[0][index].roomImage),
               fit: BoxFit.cover,
             )
           ),
@@ -86,7 +86,7 @@ class _HotelRoomsScreenState extends State<HotelRoomsScreen>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        hotelRoomsModel[index].roomType,
+                        hotelRoomsModel[0][index].roomType,
                         style: const TextStyle(
                           fontFamily: metropolisBold,
                           color: lightText,
@@ -97,7 +97,7 @@ class _HotelRoomsScreenState extends State<HotelRoomsScreen>
                       Row(
                         children: [
                           Text(
-                            hotelRoomsModel[index].roomPrice,
+                            hotelRoomsModel[0][index].roomPrice,
                             style: const TextStyle(
                               fontFamily: metropolisBold,
                               color: lightText,
@@ -135,7 +135,7 @@ class _HotelRoomsScreenState extends State<HotelRoomsScreen>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    hotelRoomsModel[index].roomPeopleNum,
+                    hotelRoomsModel[0][index].roomNumberofPeople,
                     style: const TextStyle(
                       color: lightText ,
                       fontFamily: metropolisRegular ,

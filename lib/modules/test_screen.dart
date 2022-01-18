@@ -1,7 +1,6 @@
 
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:summer_app/shared/app_style.dart';
@@ -34,7 +33,7 @@ class _TestScreenState extends State<TestScreen>
             buttonTextStyle: const TextStyle(
               fontFamily: metropolisExtraBold,
             ),
-           press: selectFile,
+           press: (){},
           ),
           Text(
             file.path ,
@@ -98,14 +97,6 @@ class _TestScreenState extends State<TestScreen>
 
 
   // how to pick a photo from gallery
-  Future selectFile() async {
-    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
-    if (result == null) return;
-    final path = result.files.single.path!;
-    final filename = result.files.single.name;
-
-    setState(() => file = File(path));
-  }
 
 
    // how to upload a file to firebase storage

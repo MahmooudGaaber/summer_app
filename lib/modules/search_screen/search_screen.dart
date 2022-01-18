@@ -18,7 +18,6 @@ class SearchScreen extends StatefulWidget
 
 class _SearchScreenState extends State<SearchScreen>
 {
-
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -37,7 +36,7 @@ class _SearchScreenState extends State<SearchScreen>
                   height: MediaQuery.of(context).size.height/2.3,
                   width: MediaQuery.of(context).size.width,
                   child: Image(
-                    image:AssetImage( hotelModel[0].hotelimg) ,
+                    image:NetworkImage( hotelModel[0].mainImage) ,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -63,21 +62,23 @@ class _SearchScreenState extends State<SearchScreen>
             ),
             const SizedBox(height: 20.0,),
 
-            Container(
-              height: 240.0,
-              decoration:BoxDecoration(
-                borderRadius: BorderRadius.circular(25.0),
-              ) ,
-              child: ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                itemCount:hotelImages.length,
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemBuilder:(context,index){
-                  return buildLastSearch(index);
-                } ,
-              ),
-            ),
+            // Container(
+            //   height: 240.0,
+            //   decoration:BoxDecoration(
+            //     borderRadius: BorderRadius.circular(25.0),
+            //   ) ,
+            //   child: ListView.builder(
+            //     physics: const BouncingScrollPhysics(),
+            //     itemCount:hotelModel[0].photos.length,
+            //     shrinkWrap: true,
+            //     scrollDirection: Axis.horizontal,
+            //     itemBuilder:(context,index){
+            //       return buildLastSearch(index);
+            //     } ,
+            //   ),
+            // ),
+            // if(userSearchedHotels.length > 0)
+            const LastSearchGridView(),
             const SizedBox(height: 30.0,),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 15.0),
@@ -118,7 +119,7 @@ class _SearchScreenState extends State<SearchScreen>
                       topRight: Radius.circular(15.0),
                     ),
                     image: DecorationImage(
-                      image:AssetImage(lastSearch[index].img),
+                      image:NetworkImage(userSearchedHotels[index].mainImage),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -140,7 +141,7 @@ class _SearchScreenState extends State<SearchScreen>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            lastSearch[index].city,
+                            userSearchedHotels[index].location,
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 15.0,
@@ -149,7 +150,7 @@ class _SearchScreenState extends State<SearchScreen>
                           ),
                           const SizedBox(height: 10.0,),
                           Text(
-                            lastSearch[index].room,
+                            userSearchHistory[index].numberOfRooms,
                             style: const TextStyle(
                               color: Colors.grey,
                               fontSize: 12.0,
@@ -157,7 +158,7 @@ class _SearchScreenState extends State<SearchScreen>
                           ),
                           const SizedBox(height: 5.0,),
                           Text(
-                            lastSearch[index].date,
+                            userSearchHistory[index].tripDate,
                             style: const TextStyle(
                               color: Colors.grey,
                               fontSize: 12.0,

@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:summer_app/models/hotel_model/hotel_model.dart';
+import 'package:summer_app/models/hotel_model/hotel_rooms_model.dart';
+import 'package:summer_app/models/search_model/search_model.dart';
+import 'package:summer_app/test_model.dart';
 
 
 const primaryColor =Color(0xff00BF9F);
@@ -28,7 +32,15 @@ const metropolisBold='Metropolis_Bold';
 
 
 
+List<HotelModel> hotelModel = [ ] ;
 
+List<TestModel> cardTestModel = [ ] ;
+
+List<List<HotelRoomsModel>> hotelRoomsModel = [] ;
+
+List<SearchModel> userSearchHistory = [] ;
+
+List<HotelModel> userSearchedHotels = [] ;
 
 
 Widget defaultMaterialButton({ buttonTextStyle ,buttonText , press , buttonPadding , buttonColor , buttonTextColor}) => Padding(

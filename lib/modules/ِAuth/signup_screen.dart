@@ -212,6 +212,8 @@ class _SignupScreenState extends State<SignupScreen> {
                       try
                       {
                       FireBaseMethods().signup(sighupFirstNameController.text, signupPasswordController.text, sighupEmailController.text);
+                      FireBaseMethods().getHotelData();
+                      FireBaseMethods().getSearchData() ;
                       FireBaseMethods().signupDone(
                         context: context,
                         page: const BottomNavi(),

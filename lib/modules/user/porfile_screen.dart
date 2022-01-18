@@ -17,7 +17,7 @@ class ProfileScreen extends StatefulWidget
 
 class _ProfileScreenState extends State<ProfileScreen>
 {
-  String imageLink ="https://image.shutterstock.com/image-vector/man-character-face-avatar-glasses-260nw-562077406.jpg" ;
+  String imageLink ="" ;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +57,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                       decoration:  BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
-                          image:  NetworkImage(imageLink),
+                          image:  NetworkImage( imageLink),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -70,13 +70,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                 height: 35.0,
                                 width: 35.0,
                                 child: RawMaterialButton(
-                                  onPressed: () {
-                                    FireBaseMethods().selectFile();
-                                    FireBaseMethods().uploadProfilePic();
-                                    setState(() {
-                                      imageLink =  (FirebaseStorage.instance.ref().child("ProfilePicturesFolder").child("profilePic").getDownloadURL() as String?)!;
-                                    });
-                                  },
+                                  onPressed: ()  {},
                                   elevation: 2.0,
                                   fillColor: Colors.white,
                                   child: const Icon(Icons.camera_alt_outlined, color: primaryColor,),

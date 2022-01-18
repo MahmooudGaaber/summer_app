@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:summer_app/models/hotel_model/hotel_model.dart';
 import 'package:summer_app/shared/app_style.dart';
+import 'package:summer_app/shared/firebase_methods.dart';
 
 import 'hotel_rating_card.dart';
 
@@ -29,7 +30,7 @@ class _HotelsDetailsScreenState extends State<HotelsDetailsScreen>
                   height: 350,
                   width: MediaQuery.of(context).size.width,
                   child:  Image(
-                    image:AssetImage( hotelModel[0].hotelimg) ,
+                    image:NetworkImage( hotelModel[0].mainImage) ,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -85,29 +86,20 @@ class _HotelsDetailsScreenState extends State<HotelsDetailsScreen>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children:  [
                       Text(
-                        hotelModel[0].hotelName,
+                        hotelModel[0].name,
                         style: const TextStyle(
                           fontFamily: metropolisBold,
                           color: tittleTextColor,
                           fontSize: 20.0,
                         ),
                       ),
-                      Text(
-                        hotelModel[0].hotelPrice,
-                        style: const TextStyle(
-                          fontFamily: metropolisBold,
-                          color: tittleTextColor,
-                          fontSize: 15.0,
-                        ),
-                      ),
-
                     ],
                   ),
                   const SizedBox(height: 15.0,),
                   Row(
                     children:  [
                       Text(
-                        hotelModel[0].hotelLocation,
+                        hotelModel[0].location,
                         style: const TextStyle(
                           fontFamily: metropolisBold,
                           color: lightText,
@@ -121,53 +113,53 @@ class _HotelsDetailsScreenState extends State<HotelsDetailsScreen>
                         size: 10.0,
                       ),
                       const SizedBox(width: 3.0,),
-                      Text(
-                        hotelModel[0].hotelFarAway,
-                        style: const TextStyle(
-                          fontFamily: metropolisBold,
-                          color: lightText,
-                          fontSize: 11.0,
-                        ),
-                      ),
+                      // Text(
+                      //   hotelModel[0].hotelFarAway,
+                      //   style: const TextStyle(
+                      //     fontFamily: metropolisBold,
+                      //     color: lightText,
+                      //     fontSize: 11.0,
+                      //   ),
+                      // ),
                     ],
                   ),
                   const SizedBox(height: 15.0,),
                   Row(
-                    children:  [
-                      const Icon(
+                    children:  const [
+                      Icon(
                         Icons.star,
                         color: primaryColor,
                         size: 13.0,
                       ),
-                      const Icon(
+                      Icon(
                         Icons.star,
                         color: primaryColor,
                         size: 13.0,
                       ),
-                      const Icon(
+                      Icon(
                         Icons.star,
                         color: primaryColor,
                         size: 13.0,
                       ),
-                      const Icon(
+                      Icon(
                         Icons.star,
                         color: primaryColor,
                         size: 13.0,
                       ),
-                      const Icon(
+                      Icon(
                         Icons.star_border,
                         color: primaryColor,
                         size: 13.0,
                       ),
-                      const SizedBox(width: 5.0,),
-                      Text(
-                        hotelModel[0].hotelNumOfReviews,
-                        style: const TextStyle(
-                          fontFamily: metropolisBold,
-                          color: Colors.white,
-                          fontSize: 11.0,
-                        ),
-                      ),
+                      SizedBox(width: 5.0,),
+                      // Text(
+                      //   hotelModel[0].hotelNumOfReviews,
+                      //   style: const TextStyle(
+                      //     fontFamily: metropolisBold,
+                      //     color: Colors.white,
+                      //     fontSize: 11.0,
+                      //   ),
+                      // ),
                     ],
                   ),
                   const SizedBox(height: 10.0,),
@@ -244,7 +236,7 @@ class _HotelsDetailsScreenState extends State<HotelsDetailsScreen>
                     ) ,
                     child: ListView.builder(
                       physics: const BouncingScrollPhysics(),
-                      itemCount:hotelImages.length,
+                      itemCount:hotelModel[0].photos.length,
                       shrinkWrap: false,
                       scrollDirection: Axis.horizontal,
                       itemBuilder:(context,index){
@@ -271,7 +263,7 @@ class _HotelsDetailsScreenState extends State<HotelsDetailsScreen>
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.0),
           image: DecorationImage(
-            image: AssetImage(hotelImages[index]),
+            image: NetworkImage(hotelModel[0].photos[index]),
             fit: BoxFit.cover,
           ),
         ),

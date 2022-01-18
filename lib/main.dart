@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:summer_app/shared/firebase_methods.dart';
+import 'firestoredatabase_test1.dart';
 import 'modules/filter_screen/filter_screen.dart';
 import 'modules/hotel/hotel_details_screen.dart';
 import 'modules/hotel/hotel_main_screen.dart';
@@ -17,6 +19,7 @@ Future<void> main() async
 {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  // FireBaseMethods().getHotelData() ;
   runApp(const MyApp());
 }
 
@@ -29,7 +32,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowMaterialGrid: false,
       debugShowCheckedModeBanner: false,
-      home: ProfileScreen(),
+      home: TripsScreen(),
     );
   }
 }

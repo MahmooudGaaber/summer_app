@@ -13,27 +13,26 @@ class LastSearchGridView extends StatefulWidget
 
 class _LastSearchGridViewState extends State<LastSearchGridView>
 {
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        height: 240.0,
-        decoration:BoxDecoration(
-          borderRadius: BorderRadius.circular(25.0),
-        ) ,
-        child: ListView.builder(
-          physics: const BouncingScrollPhysics(),
-          itemCount:hotelImages.length,
-          shrinkWrap: true,
-          scrollDirection: Axis.horizontal,
-          itemBuilder:(context,index){
-            return buildLastSearch(index);
-          } ,
-        ),
+    return Container(
+      height: 240.0,
+      decoration:BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0),
+      ) ,
+      child: ListView.builder(
+        physics: const BouncingScrollPhysics(),
+        itemCount:userSearchedHotels.length,
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        itemBuilder:(context,index){
+          return buildLastSearch(userSearchedHotels[index] , userSearchHistory[index]);
+        } ,
       ),
     );
   }
-  Widget buildLastSearch(int index){
+  Widget buildLastSearch(HotelModel hotelModel , SearchModel searchModel ){
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15.0),
       child: Column(
@@ -52,7 +51,7 @@ class _LastSearchGridViewState extends State<LastSearchGridView>
                       topRight: Radius.circular(15.0),
                     ),
                     image: DecorationImage(
-                      image:AssetImage(lastSearch[index].img),
+                      image:NetworkImage(hotelModel.mainImage),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -74,7 +73,7 @@ class _LastSearchGridViewState extends State<LastSearchGridView>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            lastSearch[index].city,
+                            hotelModel.location,
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 15.0,
@@ -83,7 +82,7 @@ class _LastSearchGridViewState extends State<LastSearchGridView>
                           ),
                           const SizedBox(height: 10.0,),
                           Text(
-                            lastSearch[index].room,
+                            searchModel.numberOfRooms,
                             style: const TextStyle(
                               color: Colors.grey,
                               fontSize: 12.0,
@@ -91,7 +90,7 @@ class _LastSearchGridViewState extends State<LastSearchGridView>
                           ),
                           const SizedBox(height: 5.0,),
                           Text(
-                            lastSearch[index].date,
+                            searchModel.tripDate,
                             style: const TextStyle(
                               color: Colors.grey,
                               fontSize: 12.0,

@@ -22,7 +22,7 @@ class _PopularDestinationState extends State<PopularDestination>
       ) ,
       child: ListView.builder(
         physics: const BouncingScrollPhysics(),
-        itemCount:hotelImages.length,
+        itemCount:hotelModel[0].photos.length,
         shrinkWrap: false,
         scrollDirection: Axis.horizontal,
         itemBuilder:(context,index){
@@ -42,7 +42,7 @@ class _PopularDestinationState extends State<PopularDestination>
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15.0),
               image: DecorationImage(
-                image: AssetImage(lastSearch[index].img),
+                image: NetworkImage(hotelModel[index].mainImage),
                 fit: BoxFit.cover,
               ),
             ),
@@ -51,7 +51,7 @@ class _PopularDestinationState extends State<PopularDestination>
             bottom: 20.0,
             left: 20.0,
             child: Text(
-              lastSearch[index].city,
+              hotelModel[index].location,
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 20.0,

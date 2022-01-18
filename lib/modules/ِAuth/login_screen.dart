@@ -111,6 +111,8 @@ class _LoginScreenState extends State<LoginScreen>
                   {
                     try {
                       FireBaseMethods().login(loginEmailController.text, loginPasswordController.text);
+                      FireBaseMethods().getHotelData()  ;
+                      FireBaseMethods().getSearchData() ;
                       FireBaseMethods().loginDone(
                         page: const BottomNavi(),
                         context: context,

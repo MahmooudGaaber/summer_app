@@ -1,17 +1,24 @@
 import 'dart:io';
-import 'package:file_picker/file_picker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:summer_app/models/hotel_model/hotel_model.dart';
+import 'package:summer_app/models/hotel_model/hotel_rooms_model.dart';
+import 'package:summer_app/models/search_model/search_model.dart';
 import 'package:summer_app/models/user/userdata_model.dart';
-
+import 'package:summer_app/shared/app_style.dart';
 import 'app_style.dart';
 
 class FireBaseMethods{
   FireBaseMethods();
   late File file = File("");
-  Future<UserSignUpMode> signup(String name, String pass, String email) async {
+  String imageLink = "https://image.shutterstock.com/image-vector/man-character-face-avatar-glasses-260nw-562077406.jpg"  ;
+
+
+  Future<UserSignUpMode> signup(String name, String pass, String email) async
+  {
    UserCredential newUser = await FirebaseAuth.instance
         .createUserWithEmailAndPassword(
       email: email,
@@ -22,7 +29,6 @@ class FireBaseMethods{
    databaseReference
         .set({
       "First Name": name,
-   //   "Last Name": sighupLastNameController.text,
       "Email": email,
     });
    var snapShotData = databaseReference.once();
@@ -31,16 +37,16 @@ class FireBaseMethods{
 return user;
   }
 
-
-  Future login (String email , String password) async {
+  Future login (String email , String password) async
+  {
     await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
   }
 
-
- void gettingError({ page, context }){
+   void gettingError({ page, context })
+   {
     showDialog(
       context: context,
       builder: (context) => const AlertDialog(
@@ -59,7 +65,8 @@ return user;
     });
   }
 
-  void signupDone({ page , context}){
+   void signupDone({ page , context})
+   {
     showDialog(
       context: context,
       builder: (context) => const AlertDialog(
@@ -81,13 +88,14 @@ return user;
       return Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute<void>(
               builder: (BuildContext context) =>
-               page()),
+               page),
               (route) => false);
     });
 
   }
 
-  void loginDone({ page , context}){
+   void loginDone({ page , context})
+   {
     showDialog(
       context: context,
       builder: (context) => const AlertDialog(
@@ -113,29 +121,52 @@ return user;
     });
   }
 
-  Future uploadProfilePic() async {
-    await FirebaseStorage.instance
-        .ref()
-        .child("ProfilePicturesFolder")
-        .child("profilePic").putFile(file).then((p0) => null);
-  }
-
-  Future<File?> selectFile() async {
-    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
-    if (result == null) return null ;
-    final path = result.files.single.path!;
-    final fileName = result.files.single.name;
-    file = File(path);
-  }
-
-  // Future<String?> putProfilePic (){
-  //   imageLink =  FirebaseStorage.instance
+  //  Future<dynamic> uploadProfilePic() async
+  //  {
+  //   final result = await FilePicker.platform.pickFiles(allowMultiple: false );
+  //   if (result == null) return null ;
+  //   final path = result.files.single.path;
+  //   final filename = result.files.single.name;
+  //   file = File(path!);
+  //   var storageRef = FirebaseStorage.instance
   //       .ref()
   //       .child("ProfilePicturesFolder")
-  //       .child("profilePic").getDownloadURL();
+  //       .child(filename);
+  //   var uploadTask = storageRef.putFile(file) ;
+  //   var storageSnapShot = uploadTask.whenComplete(() => print("Complete"));
+  //   imageLink = await storageSnapShot.then((value) => value.ref.getDownloadURL()) ;
   //   return imageLink ;
   // }
 
+   getHotelData () async
+   {
+   await FirebaseFirestore.instance.collection("Hotels").get().then((value) {
+     for (var element in value.docs) {
+       List<HotelRoomsModel> roomsModel = [];
+       hotelModel.add(HotelModel.fromJson(element.data()));
+       element.reference.collection("rooms").get().then((value) {
+         for (var element in value.docs) {
+           roomsModel.add(HotelRoomsModel.fromJson(element.data()));
+         }
+       }
+       );
+       hotelRoomsModel.add(roomsModel);
+     } });
+   }
+
+   getSearchData () async
+   {
+      await FirebaseFirestore.instance.collection("searchHistory").where("userId",isEqualTo:"hNWbcHwGFAdOCKhDDIB0NVHqYRz2" ).get().then((value) {
+        for (var element in value.docs) {
+          userSearchHistory.add(SearchModel.fromJson(element.data()));
+        }
+        for (var e in userSearchHistory) {
+          userSearchedHotels.add(hotelModel.firstWhere((element) => element.id == e.hotelId));
+        }
+
+      });
+   }
+
+  }
 
 
-}
