@@ -1,22 +1,41 @@
-class HotelsDetailModels {
- String tripStart ;
- String tripEnd ;
- String numOfRooms ;
- String numOfPeople ;
- String hotelImg ;
+class TestModel {
+ late String image;
+ late String name;
+ late String price;
+ late String date;
+ late String people;
+ late String rooms;
+ late String location;
 
- HotelsDetailModels({
-   required this.numOfPeople,
-   required this.numOfRooms,
-   required this.tripEnd,
-   required this.tripStart,
-   required this.hotelImg,
-});
+  TestModel({
+    required this.location,
+    required this.name,
+    required this.price,
+    required this.date,
+    required this.image,
+    required this.people ,
+    required this.rooms
+  });
+
+  TestModel.fromJson(Map<dynamic, dynamic> json) {
+    name = json['name'];
+    price = json['price'];
+    date = json['date'];
+    image = json['image'];
+    people = json['people'];
+    rooms = json['rooms'];
+    location = json['location'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data =  <String, dynamic>{};
+    data['name'] = name;
+    data['price'] = price;
+    data['date'] = date;
+    data['image'] = image;
+    data['people'] = people;
+    data['rooms'] = rooms;
+    data['location'] = location;
+    return data;
+  }
 }
-
-
-List<HotelsDetailModels> hotelsDetailModels =
-[
-  HotelsDetailModels(numOfPeople: '2 Adults', tripEnd: '13 Dec', numOfRooms: '1 Room', tripStart: '12 Dec', hotelImg: 'assets/images/hotels1.jpg'),
-  HotelsDetailModels(numOfPeople: '2 Adults', tripEnd: '24 Dec', numOfRooms: '1 Room', tripStart: '23 Dec', hotelImg: 'assets/images/hotels2.jpg'),
-];

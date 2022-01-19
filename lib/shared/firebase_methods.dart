@@ -17,7 +17,7 @@ class FireBaseMethods{
   String imageLink = "https://image.shutterstock.com/image-vector/man-character-face-avatar-glasses-260nw-562077406.jpg"  ;
 
 
-  Future<UserSignUpMode> signup(String name, String pass, String email) async
+  Future<UserModel> signup(String name, String pass, String email) async
   {
    UserCredential newUser = await FirebaseAuth.instance
         .createUserWithEmailAndPassword(
@@ -33,7 +33,7 @@ class FireBaseMethods{
     });
    var snapShotData = databaseReference.once();
   var map = await snapShotData.then((value) => (value.snapshot.value  as Map<dynamic,dynamic> ));
-   UserSignUpMode user = UserSignUpMode.fromJson(map);
+   UserModel user = UserModel.fromJson(map);
 return user;
   }
 

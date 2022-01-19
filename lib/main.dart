@@ -6,7 +6,6 @@ import 'modules/filter_screen/filter_screen.dart';
 import 'modules/hotel/hotel_details_screen.dart';
 import 'modules/hotel/hotel_main_screen.dart';
 import 'modules/hotel/hotels_rooms_screen.dart';
-import 'modules/test_screen.dart';
 import 'modules/ِAuth/login_screen.dart';
 import 'modules/user/mytrips_screen.dart';
 import 'modules/welcome/onboarding_screen.dart';
@@ -19,7 +18,6 @@ Future<void> main() async
 {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  // FireBaseMethods().getHotelData() ;
   runApp(const MyApp());
 }
 
@@ -32,7 +30,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowMaterialGrid: false,
       debugShowCheckedModeBanner: false,
-      home: TripsScreen(),
+      home: LoginScreen(),
     );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:summer_app/models/user/userdata_model.dart';
+import 'package:summer_app/repo/auth_repo.dart';
 import 'package:summer_app/shared/app_style.dart';
 import 'package:summer_app/shared/firebase_methods.dart';
 
@@ -110,7 +112,16 @@ class _LoginScreenState extends State<LoginScreen>
                   if(formKey.currentState!.validate())
                   {
                     try {
-                      FireBaseMethods().login(loginEmailController.text, loginPasswordController.text);
+                      UserModel user = UserModel(
+                        firstName: "",
+                        email: loginEmailController.text,
+                        lastname: "",
+                        id: "",
+                      );
+                      AuthRepo().login(
+                        pass: loginPasswordController.text ,
+                        user: user ,
+                      );
                       FireBaseMethods().getHotelData()  ;
                       FireBaseMethods().getSearchData() ;
                       FireBaseMethods().loginDone(

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:summer_app/models/user/userdata_model.dart';
 import 'package:summer_app/modules/%D9%90Auth/login_screen.dart';
+import 'package:summer_app/repo/auth_repo.dart';
 import 'package:summer_app/shared/app_style.dart';
 import 'package:summer_app/shared/firebase_methods.dart';
 import '../bottom_navi.dart';
@@ -21,7 +22,6 @@ class _SignupScreenState extends State<SignupScreen> {
   TextEditingController sighupFirstNameController = TextEditingController();
   TextEditingController sighupLastNameController = TextEditingController();
   var formKey = GlobalKey<FormState>();
-  // final userData = FirebaseDatabase.instance.ref().child("Users").push();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -209,9 +209,19 @@ class _SignupScreenState extends State<SignupScreen> {
                   press: () async {
                     if (formKey.currentState!.validate())
                     {
+
+                      UserModel user = UserModel(
+                          firstName: sighupFirstNameController.text,
+                          email: sighupEmailController.text,
+                          lastname: sighupLastNameController.text,
+                          id: "",
+                      );
                       try
                       {
-                      FireBaseMethods().signup(sighupFirstNameController.text, signupPasswordController.text, sighupEmailController.text);
+                        AuthRepo().signup(
+                          user: user,
+                          pass: signupPasswordController.text ,
+                        );
                       FireBaseMethods().getHotelData();
                       FireBaseMethods().getSearchData() ;
                       FireBaseMethods().signupDone(
@@ -226,6 +236,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           page  : const SignupScreen() ,
                         );
                       }
+
                     }
                   },
                 ),

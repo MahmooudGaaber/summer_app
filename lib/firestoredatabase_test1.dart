@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:summer_app/shared/app_style.dart';
-import 'package:summer_app/test_model.dart';
+import 'package:summer_app/models/user/trips_model.dart';
 
 import 'modules/user/mytrips_screen.dart';
 
@@ -205,18 +205,6 @@ class _FireStoreTest1State extends State<FireStoreTest1>
       rooms: roomsNumberController.text,
     );
     await testCard.add(test.toJson()) ;
-    // var added = await testCard.get();
-    // print("/////////////////${added}//////////////");
-    // print("******************${added.docs}//////////////");
-    // TestModel cardTest = TestModel.fromJson(added as  Map<dynamic, dynamic> );
-    // cardTestModel.add(cardTest);
-    // added.then((value) {
-    //  testCard.doc(value.id).get().then((value){
-    //    TestModel test = TestModel.fromJson(value.data() as  Map<String, dynamic> );
-    //    print("/////////////////${test.name}//////////////");
-    //  });
-    // });
-   // return cardTest ;
   }
 
  Future<List<TestModel>> getTrips () async

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:summer_app/models/hotel_model/hotel_model.dart';
 import 'package:summer_app/models/hotel_model/hotel_rooms_model.dart';
 import 'package:summer_app/models/search_model/search_model.dart';
-import 'package:summer_app/test_model.dart';
+import 'package:summer_app/models/user/trips_model.dart';
+import 'package:summer_app/models/user/userdata_model.dart';
 
 
 const primaryColor =Color(0xff00BF9F);
@@ -32,10 +33,13 @@ const metropolisBold='Metropolis_Bold';
 
 
 
-List<HotelModel> hotelModel = [ ] ;
 
 List<TestModel> cardTestModel = [ ] ;
 
+List<UserModel> userList = [ ] ;
+
+
+List<HotelModel> hotelModel = [ ] ;
 List<List<HotelRoomsModel>> hotelRoomsModel = [] ;
 
 List<SearchModel> userSearchHistory = [] ;

@@ -79,7 +79,6 @@ class _TripsScreenState extends State<TripsScreen>
         )
     );
   }
-
   Widget buildCategory(int index) {
     return GestureDetector(
       onTap: () {

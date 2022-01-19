@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:summer_app/modules/user/mytrips_screen.dart';
 import 'package:summer_app/shared/app_style.dart';
-import 'package:summer_app/test_model.dart';
+import 'package:summer_app/models/user/trips_model.dart';
 
 class TripsRepo extends StatefulWidget
 {
@@ -23,8 +23,8 @@ class _TripsRepoState extends State<TripsRepo>
   TextEditingController hotelLocationController = TextEditingController();
   TextEditingController peopleNumberController = TextEditingController();
   TextEditingController roomsNumberController = TextEditingController();
-  var storageRef = FirebaseStorage.instance.ref("testcard");
-  CollectionReference testCard =  FirebaseFirestore.instance.collection('test');
+  var storageRef = FirebaseStorage.instance.ref("TripsCard");
+  CollectionReference TripsCard =  FirebaseFirestore.instance.collection('Trips');
   late File imagePicked;
   late dynamic imageUploaded;
   @override
@@ -204,19 +204,7 @@ class _TripsRepoState extends State<TripsRepo>
       people: peopleNumberController.text,
       rooms: roomsNumberController.text,
     );
-    await testCard.add(test.toJson()) ;
-    // var added = await testCard.get();
-    // print("/////////////////${added}//////////////");
-    // print("******************${added.docs}//////////////");
-    // TestModel cardTest = TestModel.fromJson(added as  Map<dynamic, dynamic> );
-    // cardTestModel.add(cardTest);
-    // added.then((value) {
-    //  testCard.doc(value.id).get().then((value){
-    //    TestModel test = TestModel.fromJson(value.data() as  Map<String, dynamic> );
-    //    print("/////////////////${test.name}//////////////");
-    //  });
-    // });
-    // return cardTest ;
+    await TripsCard.add(test.toJson()) ;
   }
 
   Future<List<TestModel>> getTrips () async
